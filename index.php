@@ -10,7 +10,7 @@
 </html>-->
 
 <?php
-include 'Database.php';
+include 'resource/Database.php';
 
 $conn = OpenCon();
 
