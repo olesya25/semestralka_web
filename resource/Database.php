@@ -9,12 +9,13 @@
 
 
 
-$dsn = 'mysql:host = localhost; dbname=workout_diary';
+$dsn = 'mysql:host = localhost; dbname=mydb';
 $dbuser = 'root';
 $dbpass = 'mysql';
 
 try{
     $db = new PDO($dsn, $dbuser, $dbpass);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     echo "Connected Successfully";
 
