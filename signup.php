@@ -60,7 +60,7 @@ if(isset($_POST['signupBtn'])){
             $result = "<p style='color: red;'> There was 1 error in the form<br>";
 
             $result .= "<ul style='color: red;'>";
-            //loop through error array and display all items
+
             foreach($form_errors as $error){
                 $result .= "<li> {$error} </li>";
             }
@@ -70,7 +70,7 @@ if(isset($_POST['signupBtn'])){
             $result = "<p style='color: red;'> There were " .count($form_errors). " errors in the form <br>";
 
             $result .= "<ul style='color: red;'>";
-            //loop through error array and display all items
+
             foreach($form_errors as $error){
                 $result .= "<li> {$error}</li>";
             }

@@ -17,7 +17,7 @@ try{
     $db = new PDO($dsn, $dbuser, $dbpass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Connected Successfully";
+    //echo "Connected Successfully";
 
 }catch (Exception $exception) {
 
