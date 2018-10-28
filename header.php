@@ -28,7 +28,7 @@
                        echo '
                 <form action="resource/login-funkc.php" method="post">
                     <input type="text" name="username" placeholder="Enter username">
-                    <input type="password" name="heslo" placeholder="Enter password">
+                    <input type="password" name="password" placeholder="Enter password">
                     <button type="submit" name="loginBtn">Log in</button>
                 </form>
                 <a href="signup.php">Sign up</a>';

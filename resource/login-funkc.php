@@ -10,46 +10,35 @@ if(isset($_POST['loginBtn'])){
 
     require 'database_connect.php';
 
-    $username = mysqli_real_escape_string($connect, $_POST['username']);
-    $password = mysqli_real_escape_string($connect, $_POST['heslo']);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $password = md5($password);
 
     //Zachyceni chyb
     //Kotroluju jestli vsichni radky jsou vyplnne
 
-    if(empty($username) || empty($password)){
-        header("Location: ../index.php?login=empty");
-        exit();
-    }else{
-        $sqlQuery = "SELECT * FROM uzivatel WHERE username='$username'";
-        $result = mysqli_query($connect, $sqlQuery);
-        $checkResult = mysqli_num_rows($result);
-        if($checkResult < 1){
-            header("Location: ../index.php?login=noexist");
-            exit();
-        }else{
-            if($row = mysqli_fetch_assoc($result)){
-                //dehesovani hesla
-                $deHashed = password_verify($password, $row['heslo']);
 
-                if($deHashed == false){
-                    header("Location: ../index.php?login=error");
-                    exit();
-                }elseif ($deHashed == true){
-                    $_SESSION['u_id'] = $row['id'];
-                    $_SESSION['u_jmeno'] = $row['jmeno'];
-                    $_SESSION['u_prijmeni'] = $row['prijmeni'];
-                    $_SESSION['u_mail'] = $row['mail'];
-                    $_SESSION['u_username'] = $row['username'];
-                    header("Location: ../index.php?login=success");
-                    exit();
+        $sqlQuery = "SELECT * FROM user WHERE u_username = :username AND u_password = :password";
+        $statment = $connect->prepare($sqlQuery);
+        $statment->execute(array(':username' => $username,
+                                ':password' => $password));
+        $user = $statment->fetch();
 
-                }
+
+        if($user){
+                $_SESSION['u_id'] = $user['u_id'];
+                $_SESSION['u_name'] = $user['u_name'];
+                $_SESSION['u_surname'] = $user['u_surname'];
+                $_SESSION['u_email'] = $user['u_email'];
+                $_SESSION['u_username'] = $user['u_username'];
+                header("Location: ../index.php?login=success");
+                exit();
+            }else{
+                header("Location: ../index.php?login=invalid_pass");
+                exit();
             }
-
+        }else{
+            header("Location: ../index.php?login=invalid_username");
+            exit();
         }
 
-    }
-}else{
-    header("Location: ../index.php?login=error");
-    exit();
-}
